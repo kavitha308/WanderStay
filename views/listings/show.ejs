@@ -1,0 +1,54 @@
+<% layout("../layouts/boilerplate") %>
+<body>
+   <br>
+       <div class="card">
+                <a href = "/listings/<%= listing._id %>" class = "image-info" class="card-img-overlay">
+                    <img src="<%= listing.image %>" class="card-img-top show-img col-8 offset-2 img-show" alt="Listing Image" style="height: 20rem;">
+                    <div class="card-img-overlay"></div>
+                     </a>
+                <div class="card-body offset-2">
+                    <h5 class="card-title"><%= listing.title %></h5>
+                    <p class="card-text">
+                        <b>Title:</b><%=listing.title%> <br>
+                        <b>id:</b><%=listing._id%> <br>
+                        <b>Price :</b> &#x20b9;<%= listing.price %>/night <br>
+                        <b>Description :</b> <%=listing.description%><br>
+                        <b>Location:</b> <%=listing.location%> <br>
+                        <b>Country</b> <%=listing.country%><br>
+                        <b>ImageURL:</b> <%=listing.image%><br>
+                    </p>
+                </div>
+            </div>
+   <div style="display: flex; gap: 1rem;" class = "offset-2 ">
+  <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark show-btns">Edit</a>
+  <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="margin: 0;">
+    <button class="btn btn-dark show-btns">Delete</button>
+  </form>
+  <br>
+</div>
+<hr>
+<div class=" mb-3 offset-2 mt-3">
+    <h4>Leave a Review</h4>
+    <form action = "/listings/<%= listing._id %>/reviews" method = "POST" class = "needs-validation" novalidate>
+                <div class = "mb-3">
+            <label class="form-label">Comment :</label>
+            <textarea type = "text" cols = "30" rows="5" class="form-control" name = "reviews[comment]" required></textarea>
+            <div class = "valid-feedback">Thanks for the review</div>
+         <div class = "invalid-feedback">Please leave a comment</div>
+        </div>
+        <div class = "mb-3">
+            <label class=" form-label">Rating : </label>
+            <input type = "range" min = "1" max="5" class="form-range" name = "reviews[rating]">
+            <!-- <div class = "valid-feedback">Thanks for the review</div>
+         <div class = "invalid-feedback">Please give us a rating</div> -->
+        </div>
+        <button class = "btn btn-dark">Submit</button>
+    </form>
+</div>
+<hr>
+<div>
+    <h4>Reviews</h4>
+   <p> <%=listing.reviews%></p>
+</div>
+</body>
+</html>

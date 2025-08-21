@@ -1,0 +1,21 @@
+
+<% layout("../layouts/boilerplate") %>
+<body>
+    <div class="row row-cols-lg-3 all">
+        <% for (let listing of allListings) { %>
+            <div class="card">
+                <a href = "/listings/<%= listing._id %>" class = "image-info" class="card-img-overlay">
+                    <!-- <p>Image URL: <%= listing.image %></p> -->
+                    <img src="<%= listing.image  || 'http://media.architecturaldigest.com/photos/57e42deafe422b3e29b7e790/master/pass/JW_LosCabos_2015_MainExterior.jpg'%>" class="card-img-top" alt="Hotel img" style="height: 20rem;">
+                    <div class="card-img-overlay"></div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= listing.title %></h5>
+                    <p class="card-text">
+                    &#x20b9;<%= listing.price.toLocaleString("en-IN")%>/night
+                    </p>
+                </div>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</body>
