@@ -27,7 +27,17 @@ const HotelSchema = new Schema({
         type:Schema.Types.ObjectId , 
         ref : "Review"
       }
-    ]
+    ] , 
+    owner:{
+      type:Schema.Types.ObjectId , 
+      ref :"User" , 
+    }
+
+})
+HotelSchema.post("findOneAndDelete" , async (listing)=>{
+if(listing){
+  await Hotel.deleteMany({_id:{$in:listing.reviews}})
+}
 })
 const Hotel = new mongoose.model( "Hotel", HotelSchema);
 module.exports =  Hotel

@@ -150,3 +150,7 @@ footer {
 .alerts{
    margin-top: 20px !important;
 }
+/* review card styling */
+ .review{
+   border:2px solid grey !important;
+} 

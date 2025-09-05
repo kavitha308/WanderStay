@@ -1,10 +1,13 @@
 <% layout("../layouts/boilerplate") %>
 <body>
-   <br>
-       <div class="card">
+    <% if (!listing) { %>
+  <p>Listing not found.</p>
+<% }else{%>
+    <br>
+       <div class="listing-card">
                 <a href = "/listings/<%= listing._id %>" class = "image-info" class="card-img-overlay">
                     <img src="<%= listing.image %>" class="card-img-top show-img col-8 offset-2 img-show" alt="Listing Image" style="height: 20rem;">
-                    <div class="card-img-overlay"></div>
+                    <!-- <div class="card-img-overlay"></div> -->
                      </a>
                 <div class="card-body offset-2">
                     <h5 class="card-title"><%= listing.title %></h5>
@@ -12,6 +15,7 @@
                         <b>Title:</b><%=listing.title%> <br>
                         <b>id:</b><%=listing._id%> <br>
                         <b>Price :</b> &#x20b9;<%= listing.price %>/night <br>
+                        <b>User :</b> <%=listing.owner%><br>
                         <b>Description :</b> <%=listing.description%><br>
                         <b>Location:</b> <%=listing.location%> <br>
                         <b>Country</b> <%=listing.country%><br>
@@ -19,6 +23,8 @@
                     </p>
                 </div>
             </div>
+           
+        <% if(currUser && listing.owner._id.equals(currUser._id)){%>
    <div style="display: flex; gap: 1rem;" class = "offset-2 ">
   <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark show-btns">Edit</a>
   <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="margin: 0;">
@@ -26,6 +32,8 @@
   </form>
   <br>
 </div>
+<% }%>
+<% if( currUser){%>
 <hr>
 <div class=" mb-3 offset-2 mt-3">
     <h4>Leave a Review</h4>
@@ -46,9 +54,25 @@
     </form>
 </div>
 <hr>
+<%}%>
 <div>
-    <h4>Reviews</h4>
-   <p> <%=listing.reviews%></p>
+        <div class = "row offset-2">
+              <h4>Reviews</h4>
+            <% for(let revieww of listing.reviews) { %>
+            <div class = "card col-5 ms-3 mb-3 review">
+                <div class="card-body">
+            <h5 class="card-title"><%= revieww.author.username %></h5>
+            <p class="card-text"> <%= revieww.comment %></p>
+            <p class="card-text"><%= revieww.rating %> Stars</p>
+            </div>
+            <form method = "POST" action="/listings/<%=listing._id%>/reviews/<%=revieww._id%>?_method=DELETE">
+                <button class="btn btn-sm btn-dark mb-3">Delete</button>
+            </form>
+            </div>
+        <% } %>
+
+        </div>
 </div>
+   <%}%>
 </body>
 </html>
